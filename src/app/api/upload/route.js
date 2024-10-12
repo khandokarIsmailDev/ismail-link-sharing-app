@@ -14,11 +14,23 @@ export async function POST(request) {
   const buffer = Buffer.from(bytes);
 
   const filename = Date.now() + '_' + file.name.replace(/\s/g, '_');
-  const filepath = path.join(process.cwd(), 'public', 'uploads', filename);
+  
+  let filePath;
+  
+  if (process.env.VERCEL_ENV) {
+    // We're on Vercel, use a temporary storage
+    filePath = `/tmp/${filename}`;
+  } else {
+    // We're in local development, use the public folder
+    filePath = path.join(process.cwd(), 'public', 'uploads', filename);
+  }
 
   try {
-    await writeFile(filepath, buffer);
-    return NextResponse.json({ filePath: `/uploads/${filename}` }, { status: 200 });
+    await writeFile(filePath, buffer);
+    
+    const publicPath = `/uploads/${filename}`;
+    
+    return NextResponse.json({ filePath: publicPath }, { status: 200 });
   } catch (error) {
     console.error('Error saving file:', error);
     return NextResponse.json({ error: "Error saving file." }, { status: 500 });
