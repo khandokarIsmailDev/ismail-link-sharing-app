@@ -40,3 +40,7 @@ npm run dev
 ```
 
 8. Access the Application: Open your web browser and go to http://localhost:3000 to see your Next.js application running.
+
+
+# vercel live link 
+- https://ismail-link-sharing-app.vercel.app/
