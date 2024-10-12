@@ -3,8 +3,8 @@
 import React, { useCallback, useState,useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
-export default function DragDrop({onImageChange}) {
-  const [selectedImage, setSelectedImage] = useState("/images/man.png"); // Default background image
+export default function DragDrop({onImageChange,imageProfile}) {
+  const [selectedImage, setSelectedImage] = useState(""); // Default background image
 
   // Handle image drop
   const onDrop = useCallback(async (acceptedFiles) => {
@@ -42,7 +42,7 @@ export default function DragDrop({onImageChange}) {
       {...getRootProps()}
       className="sm:w-1/3 sm:h-full h-[60%] w-1/3 my-4 bg-cover bg-center rounded-lg relative cursor-pointer"
       style={{
-        backgroundImage: `url(${selectedImage})`, // Set selected image as background
+        backgroundImage: `url(${selectedImage ? selectedImage : imageProfile})`, // Set selected image as background
       }}
     >
       <input {...getInputProps()} />

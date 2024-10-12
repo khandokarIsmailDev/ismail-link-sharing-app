@@ -93,7 +93,7 @@ export default function ProfileDetail() {
         <div className="sm:w-1/3 block text-sm">
           <h1>Profile picture</h1>
         </div>
-        <DragDrop onImageChange={handleImageChange} />
+        <DragDrop onImageChange={handleImageChange} imageProfile={formData.imageProfile} />
         <div className="sm:w-1/3 text-[.6rem]">
           <p>
             Image must be below 1024x1024px. <br />

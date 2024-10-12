@@ -11,7 +11,7 @@ export default function PreBody({userData}) {
             <div className="flex justify-center">
               <div className="text-center shadow-2xl bg-white rounded-lg px-5 py-10">
                 <div className="w-24 h-24 mb-4 bg-gray-200 rounded-full mx-auto">
-                  <img src="" alt="" />
+                  <img src={userData?.imageProfile} alt="" className="rounded-full w-full h-full object-cover" />
                 </div>
               <h1 className="mb-2 text-xl">{`${userData?.firstName} ${userData?.lastName}`}</h1>
                 <p className="mb-12 text-sm text-gray-500">{userData?.email}</p>
