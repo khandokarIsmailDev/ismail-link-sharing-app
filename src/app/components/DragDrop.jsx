@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState,useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
-export default function DragDrop() {
+export default function DragDrop({onImageChange}) {
   const [selectedImage, setSelectedImage] = useState("/images/man.png"); // Default background image
 
   // Handle image drop
@@ -23,6 +23,11 @@ export default function DragDrop() {
     accept: "image/*", // Accept only image files
     multiple: false,   // Allow only one image
   });
+
+  useEffect(() =>{
+    onImageChange(selectedImage)
+  },[])
+
 
   return (
     <div

@@ -6,9 +6,11 @@ import DragDrop from "./DragDrop"
 export default function ProfileDetail() {
   // const router = useRouter();
   const [formData, setFormData] = useState({
+    id: null,
     firstName: '',
     lastName: '',
     email: '',
+    imageProfile: '/images/man.png'
   });
 
   useEffect(() => {
@@ -18,9 +20,11 @@ export default function ProfileDetail() {
       const parsedData = JSON.parse(storedData);
       // Ensure formData structure matches
       setFormData({
+        id:parsedData.data.id,
         firstName: parsedData.data.firstName || '',
         lastName: parsedData.data.lastName || '',
         email: parsedData.data.email || '',
+        imageProfile: parsedData.data.imageProfile || '/images/man.png'
       });
     }
   }, []);
@@ -32,13 +36,23 @@ export default function ProfileDetail() {
     });
   };
 
+  const handleImageChange = (imageUrl) => {
+    setFormData(prevData => ({
+      ...prevData,
+      imageProfile: imageUrl,
+    }));
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     const userProfile = {
+      id: formData.id,
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
+      imageProfile: formData.imageProfile
     };
   
     try {
@@ -57,7 +71,9 @@ export default function ProfileDetail() {
   
         window.location.reload()
       } else {
-        alert("Error saving profile!");
+        const errorData = await res.json();
+        console.error("Error response:", errorData);
+        alert(`Error saving profile: ${errorData.error}`)
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -77,7 +93,7 @@ export default function ProfileDetail() {
         <div className="sm:w-1/3 block text-sm">
           <h1>Profile picture</h1>
         </div>
-        <DragDrop/>
+        <DragDrop onImageChange={handleImageChange} />
         <div className="sm:w-1/3 text-[.6rem]">
           <p>
             Image must be below 1024x1024px. <br />
