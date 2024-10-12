@@ -40,8 +40,8 @@ export default function MobileMoc({ links }) {
 
           {userData ? (
             <>
-              <h1 className="mb-2 text-xl">Ben Wright</h1>
-              <p className="mb-12 text-sm text-gray-500">ben@gmail.com</p>
+              <h1 className="mb-2 text-xl">{`${userData.firstName} ${userData.lastName}`}</h1>
+              <p className="mb-12 text-sm text-gray-500">{userData.email}</p>
             </>
           ) : (
             <>
