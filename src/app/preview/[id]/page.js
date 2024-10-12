@@ -9,7 +9,7 @@ export default function Page({ params }) {
   const [loading, setLoading] = useState(true); // State to manage loading state
   const [error, setError] = useState(null); // State to hold any errors
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchUserData = async () => {
       try {
         const response = await fetch(`/api/preview/${id}`);

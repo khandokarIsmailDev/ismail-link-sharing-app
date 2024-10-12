@@ -1,10 +1,34 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import LinkCard from "./LinkCard";
 
-export default function MobileMoc({links}) {
+export default function MobileMoc({ links }) {
   const totalBoxes = 5;
   const emptyBoxes = totalBoxes - links.length;
+
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const loadUserProfile = () => {
+      try {
+        // Retrieve profile data from localStorage
+        const profileData = JSON.parse(localStorage.getItem("profileData"));
+
+        // Check if profileData and required fields are present
+        if (profileData && profileData.data && profileData.data.id) {
+          setUserData(profileData.data); // Set user data into state
+        } else {
+          console.error("No profile data found in localStorage");
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    loadUserProfile();
+  }, []);
+
+  console.log(userData);
 
   return (
     <div className="hero-custom lg:bg-[6rem] md:bg-[2rem] relative">
@@ -13,8 +37,18 @@ export default function MobileMoc({links}) {
           <div className="w-24 h-24 mb-4 bg-gray-200 rounded-full mx-auto">
             <img src="" alt="" />
           </div>
-          <h1 className="mb-2 text-xl">Ben Wright</h1>
-          <p className="mb-12 text-sm text-gray-500">ben@gmail.com</p> 
+
+          {userData ? (
+            <>
+              <h1 className="mb-2 text-xl">Ben Wright</h1>
+              <p className="mb-12 text-sm text-gray-500">ben@gmail.com</p>
+            </>
+          ) : (
+            <>
+              <div className="w-36 mx-auto h-4 rounded-lg mt-7 mb-4 bg-gray-100"></div>
+              <div className="w-16 mx-auto h-2 rounded-lg mb-7 bg-gray-100"></div>
+            </>
+          )}
 
           {/* Display links */}
           {links.map((link, index) => (
