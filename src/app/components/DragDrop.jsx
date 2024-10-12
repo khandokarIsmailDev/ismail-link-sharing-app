@@ -36,13 +36,14 @@ export default function DragDrop({onImageChange,imageProfile}) {
     onImageChange(selectedImage)
   },[])
 
+  const backgroundImage = selectedImage || imageProfile;
 
   return (
     <div
       {...getRootProps()}
       className="sm:w-1/3 sm:h-full h-[60%] w-1/3 my-4 bg-cover bg-center rounded-lg relative cursor-pointer"
       style={{
-        backgroundImage: `url(${selectedImage ? selectedImage : imageProfile})`, // Set selected image as background
+        backgroundImage: backgroundImage ? `url('${backgroundImage}')` : 'none',
       }}
     >
       <input {...getInputProps()} />
