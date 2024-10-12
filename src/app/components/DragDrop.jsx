@@ -7,22 +7,30 @@ export default function DragDrop({onImageChange}) {
   const [selectedImage, setSelectedImage] = useState("/images/man.png"); // Default background image
 
   // Handle image drop
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result); // Update background image with the uploaded one
-      };
-      reader.readAsDataURL(file);
-    }
-  }, []);
+    const formData = new FormData();
+    formData.append('file', file);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: "image/*", // Accept only image files
-    multiple: false,   // Allow only one image
-  });
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSelectedImage(data.filePath);
+        onImageChange(data.filePath)
+      } else {
+        console.error('Upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }, [onImageChange]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
 
   useEffect(() =>{
     onImageChange(selectedImage)

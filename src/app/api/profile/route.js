@@ -13,7 +13,6 @@ export async function POST(request) {
     let updatedProfile;
 
     if (id) {
-      // If ID exists, update the existing profile
       updatedProfile = await prisma.userProfile.update({
         where: { id: parseInt(id) },
         data: {
@@ -24,7 +23,6 @@ export async function POST(request) {
         },
       });
     } else {
-      // If ID doesn't exist, create a new profile
       updatedProfile = await prisma.userProfile.create({
         data: {
           firstName,
@@ -45,7 +43,6 @@ export async function POST(request) {
     await prisma.$disconnect();
   }
 }
-
 export async function GET(req,res){
     try{
         const prisma = new PrismaClient();
