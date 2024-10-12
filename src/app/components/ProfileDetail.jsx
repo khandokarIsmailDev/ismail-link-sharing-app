@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import DragDrop from "./DragDrop"
 
 export default function ProfileDetail() {
   // const router = useRouter();
@@ -76,13 +77,7 @@ export default function ProfileDetail() {
         <div className="sm:w-1/3 block text-sm">
           <h1>Profile picture</h1>
         </div>
-        <div className="sm:w-1/3 sm:h-full h-[60%] w-1/3 my-4 bg-[url('/images/man.png')] bg-cover bg-center rounded-lg relative">
-          <div className="absolute inset-0 bg-black opacity-50 rounded-lg" />
-          <div className="flex flex-col justify-center items-center h-full z-10 relative text-white text-sm">
-            <img src="/images/icon-upload-image.svg" alt="" />
-            <p className="text-center">Change Image</p>
-          </div>
-        </div>
+        <DragDrop/>
         <div className="sm:w-1/3 text-[.6rem]">
           <p>
             Image must be below 1024x1024px. <br />
