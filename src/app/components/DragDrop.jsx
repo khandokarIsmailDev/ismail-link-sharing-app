@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useCallback, useState,useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
-export default function DragDrop({onImageChange,imageProfile}) {
-  const [selectedImage, setSelectedImage] = useState(""); // Default background image
+export default function DragDrop({onImageChange, imageProfile}) {
+  const [selectedImage, setSelectedImage] = useState("");
 
   // Handle image drop
   const onDrop = useCallback(async (acceptedFiles) => {
@@ -20,8 +20,8 @@ export default function DragDrop({onImageChange,imageProfile}) {
 
       if (response.ok) {
         const data = await response.json();
-        setSelectedImage(data.filePath);
-        onImageChange(data.filePath)
+        setSelectedImage(data.fileUrl); // Use fileUrl from Cloudinary response
+        onImageChange(data.fileUrl);
       } else {
         console.error('Upload failed');
       }
@@ -32,9 +32,11 @@ export default function DragDrop({onImageChange,imageProfile}) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
 
-  useEffect(() =>{
-    onImageChange(selectedImage)
-  },[])
+  useEffect(() => {
+    if (imageProfile) {
+      setSelectedImage(imageProfile);
+    }
+  }, [imageProfile]);
 
   const backgroundImage = selectedImage || imageProfile;
 
