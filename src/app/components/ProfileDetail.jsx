@@ -67,9 +67,11 @@ export default function ProfileDetail() {
       if (res.ok) {
         const savedProfile = await res.json();
         localStorage.setItem('profileData', JSON.stringify(savedProfile));
+        
+        // Dispatch a custom event to notify other components
+        window.dispatchEvent(new Event('profileUpdated'));
+        
         alert("Profile saved successfully!");
-  
-        window.location.reload()
       } else {
         const errorData = await res.json();
         console.error("Error response:", errorData);
