@@ -38,8 +38,14 @@ export default function MobileMoc({ links }) {
     <div className="hero-custom lg:bg-[6rem] md:bg-[2rem] relative">
       <div className="flex absolute lg:left-[8.7rem] md:left-[4.5rem] top-40">
         <div className="text-center">
-          <div className="w-24 h-24 mb-4 bg-gray-200 rounded-full mx-auto">
-            <img src={userData?.imageProfile || '/images/default-avatar.png'} alt="" className="rounded-full w-full h-full object-cover" />
+          <div className="w-24 h-24 mb-4 bg-gray-100 rounded-full mx-auto">
+            {userData?.imageProfile && (
+              <img
+                src={userData?.imageProfile}
+                alt=""
+                className="rounded-full w-full h-full object-cover"
+              />
+            )}
           </div>
 
           {userData ? (
