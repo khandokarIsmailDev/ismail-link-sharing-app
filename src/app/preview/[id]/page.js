@@ -31,7 +31,9 @@ export default function Page({ params }) {
   }, [id]); // Fetch data when `id` changes
 
   if (loading) {
-    return <div>Loading...</div>; // Display a loading message while fetching
+    return (<div className='h-screen w-screen flex justify-center items-center'> 
+    <img src="/images/loading.svg" className='w-auto' alt="" />
+    </div>) // Display a loading message while fetching
   }
 
   if (error) {
