@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import DragDrop from "./DragDrop"
 
 export default function ProfileDetail() {
-  // const router = useRouter();
   const [formData, setFormData] = useState({
     id: null,
     firstName: '',
@@ -18,14 +17,16 @@ export default function ProfileDetail() {
     const storedData = localStorage.getItem('profileData');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      // Ensure formData structure matches
-      setFormData({
-        id:parsedData.data.id,
-        firstName: parsedData.data.firstName || '',
-        lastName: parsedData.data.lastName || '',
-        email: parsedData.data.email || '',
-        imageProfile: parsedData.data.imageProfile || '/images/man.png'
-      });
+      // Ensure formData structure matches and handle undefined cases
+      if (parsedData && parsedData.id) {
+        setFormData({
+          id: parsedData.id, // Adjusted to match the expected structure
+          firstName: parsedData.firstName || '',
+          lastName: parsedData.lastName || '',
+          email: parsedData.email || '',
+          imageProfile: parsedData.imageProfile || '/images/man.png'
+        });
+      }
     }
   }, []);
 
@@ -42,7 +43,6 @@ export default function ProfileDetail() {
       imageProfile: imageUrl,
     }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

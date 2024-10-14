@@ -12,8 +12,8 @@ export default function MobileMoc({ links }) {
     const loadUserData = () => {
       try {
         const profileData = JSON.parse(localStorage.getItem("profileData"));
-        if (profileData && profileData.data) {
-          setUserData(profileData.data);
+        if (profileData) {
+          setUserData(profileData); // Directly set profileData instead of profileData.data
         }
       } catch (error) {
         console.error("Error loading user data:", error);
@@ -34,6 +34,8 @@ export default function MobileMoc({ links }) {
     };
   }, []);
 
+  console.log("here is userData from MobileMoc: ", userData);
+
   return (
     <div className="hero-custom lg:bg-[6rem] md:bg-[2rem] relative">
       <div className="flex absolute lg:left-[8.7rem] md:left-[4.5rem] top-40">
@@ -41,7 +43,7 @@ export default function MobileMoc({ links }) {
           <div className="w-24 h-24 mb-4 bg-gray-100 rounded-full mx-auto">
             {userData?.imageProfile && (
               <img
-                src={userData?.imageProfile}
+                src={userData.imageProfile}
                 alt=""
                 className="rounded-full w-full h-full object-cover"
               />

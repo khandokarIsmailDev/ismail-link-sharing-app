@@ -15,8 +15,37 @@ export default function LinksStart({
 
   const handleSave = async () => {
     try {
+      // Check if the profile exists
+      let userId = profileData.id;
+
+      // If the profile does not exist, create it first
+      if (!userId) {
+        const newProfile = {
+          firstName: "", // Default value
+          lastName: "",  // Default value
+          email: "",     // Default value
+          imageProfile: "/images/man.png", // Default value
+        };
+
+        const profileResponse = await fetch('/api/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newProfile),
+        });
+
+        if (!profileResponse.ok) {
+          throw new Error('Failed to create profile');
+        }
+
+        const savedProfile = await profileResponse.json();
+        userId = savedProfile.data.id; // Get the newly created user ID
+      }
+
+      // Create a payload with the user ID and links
       const payload = {
-        id: profileData.id, // Use the profile ID
+        id: userId, // Use the profile ID
         link: links.map(link => ({
           platform: link.platform,
           link: link.link,
@@ -42,7 +71,11 @@ export default function LinksStart({
 
       // Update localStorage with the new links
       const updatedProfileData = {
-        ...profileData,
+        id: userId, // Use the user ID from the profile
+        firstName: profileData.firstName || '', // Ensure firstName is included
+        lastName: profileData.lastName || '', // Ensure lastName is included
+        email: profileData.email || '', // Ensure email is included
+        imageProfile: profileData.imageProfile || '/images/man.png', // Ensure imageProfile is included
         links: savedLinks.userProfile.link, // Assuming the response contains the updated links
       };
       localStorage.setItem('profileData', JSON.stringify(updatedProfileData));
