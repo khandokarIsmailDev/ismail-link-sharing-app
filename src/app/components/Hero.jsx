@@ -32,13 +32,13 @@ export default function Hero({ ProfileDetail, LinksStart }) {
     if (platform === "GitHub") {
       updatedLinks[index].icon = "/images/icon-github.svg";
     } else if (platform === "Twitter") {
-      updatedLinks[index].icon = "/images/icon-twitter.svg";
+      updatedLinks[index].icon = "/images/twiiter-white.svg";
     } else if (platform === "Twitch") {
-      updatedLinks[index].icon = "/images/icon-twitch.svg";
+      updatedLinks[index].icon = "/images/twitch-white.svg";
     } else if (platform === "Facebook") {
-      updatedLinks[index].icon = "/images/icon-facebook.svg";
+      updatedLinks[index].icon = "/images/facebook-white.svg";
     } else if (platform === "Gitlab") {
-      updatedLinks[index].icon = "/images/icon-gitlab.svg";
+      updatedLinks[index].icon = "/images/gitlab-white.svg";
     }
 
     setLinks(updatedLinks); // Update the state
