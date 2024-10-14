@@ -15,9 +15,18 @@ datasource db {
 
 
 model userProfile {
-  id        Int @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String 
-  imageProfile String?   
+  id           Int      @id @default(autoincrement())
+  firstName    String?
+  lastName     String?
+  email        String?
+  imageProfile String?
+  link         Link[]   // One-to-many relation to links
+}
+
+model Link {
+  id          Int      @id @default(autoincrement())
+  platform    String?
+  link        String?
+  userId      Int
+  userProfile userProfile @relation(fields: [userId], references: [id])
 }

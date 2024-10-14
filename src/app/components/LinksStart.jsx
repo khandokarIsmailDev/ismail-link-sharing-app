@@ -12,7 +12,30 @@ export default function LinksStart({
   // Set the maximum number of links allowed
   const MAX_LINKS = 5;
 
-  console.log(`here is LinksStart component : ${links} : length is : ${links.length}`);
+  const handleSave = async () => {
+    try {
+      const payload = { /* your link data here */ };
+      console.log('Sending payload:', payload);  // Log the payload
+      const response = await fetch('/api/profile/savelinks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save links');
+      }
+  
+      // Handle success
+    } catch (error) {
+      console.error('Error saving links:', error);
+    }
+  };
+  
+
+  // console.log(`here is LinksStart component : ${links} : length is : ${links.length}`);
 
   return (
     <div className="">
@@ -36,7 +59,7 @@ export default function LinksStart({
             onClick={addNewLink} // Add onClick event to call the addNewLink function
             className="w-full text-center border border-[#633cff] py-3 rounded-lg text-[#633cff] font-medium transition-all hover:bg-[#633cff] hover:text-white"
           >
-            + Add new link
+            + Add new linkå
           </button>
         )}
         {/* Optionally display a message when the max limit is reached */}
@@ -52,7 +75,11 @@ export default function LinksStart({
       <div className="">
         {links.length === 0 ? (
           <div className="">
-            <img className="w-full" src="/images/illustration-empty.svg" alt="" />
+            <img
+              className="w-full"
+              src="/images/illustration-empty.svg"
+              alt=""
+            />
           </div>
         ) : (
           <div className="max-h-96 md:h-[30rem] overflow-auto">
@@ -71,12 +98,13 @@ export default function LinksStart({
           </div>
         )}
         {/* horizontal line  */}
-        <div className="h-[1px] border mb-4 mt-6 sm:mt-20" ></div>
+        <div className="h-[1px] border mb-4 mt-6 sm:mt-20"></div>
         <div className="w-full text-end">
           <input
             className="w-full sm:w-20 px-5 py-2 border rounded-lg bg-[#633CFF] text-white"
             type="submit"
             defaultValue="Save"
+            onClick={handleSave}
           />
         </div>
       </div>

@@ -6,7 +6,7 @@ import DropdownItem from "./DropdownItem";
 
 export default function Hero({ ProfileDetail, LinksStart }) {
   // Initialize state to manage the links, now including 'icon' for each link
-  const [links, setLinks] = useState([]); // Add 'icon' to each link
+  const [links, setLinks] = useState([]); // Add platform,link & icon add here
   const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
 
   // Add a new link when "Add new link" button is clicked

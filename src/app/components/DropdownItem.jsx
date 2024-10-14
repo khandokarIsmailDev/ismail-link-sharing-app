@@ -1,6 +1,5 @@
-
 'use client'
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function DropdownItem({ onPlatformSelect }) {
   const [selectedText, setSelectedText] = useState("Select a platform");
@@ -14,11 +13,11 @@ export default function DropdownItem({ onPlatformSelect }) {
     setIsMenuVisible(!isMenuVisible);
   };
 
-  const handleSelect = (text, logoSrc) => {
-    setSelectedText(text);
+  const handleSelect = (platform, logoSrc) => {
+    setSelectedText(platform);
     setSelectedLogo(logoSrc);
     setIsMenuVisible(false);
-    onPlatformSelect(text);  // Pass selected platform back to parent
+    onPlatformSelect(platform);  // Pass selected platform back to parent
   };
 
   useEffect(() => {
@@ -146,4 +145,3 @@ export default function DropdownItem({ onPlatformSelect }) {
     </div>
   );
 }
-
