@@ -90,13 +90,16 @@ export async function POST(request) {
   }
 }
 
-export async function GET(req,res){
-    try{
-        const prisma = new PrismaClient();
-        const result = await prisma.userProfile.findMany()
+export async function GET(req, res) {
+  try {
+    const result = await prisma.userProfile.findMany({
+      include: { link: true }, // Include links in the response
+    });
 
-        return NextResponse.json({status:"success",data:result})
-    }catch(err){
-        return NextResponse.json({status:"fail",data:err.toString()})
-    }
+    return NextResponse.json({ status: "success", data: result });
+  } catch (err) {
+    return NextResponse.json({ status: "fail", data: err.toString() });
+  } finally {
+    await prisma.$disconnect();
+  }
 }

@@ -8,13 +8,21 @@ export default function LinksStart({
   newHandlChange,
   addNewLink,
   removeLink,
+  profileData, // Pass profileData as a prop
 }) {
   // Set the maximum number of links allowed
   const MAX_LINKS = 5;
 
   const handleSave = async () => {
     try {
-      const payload = { /* your link data here */ };
+      const payload = {
+        id: profileData.id, // Use the profile ID
+        link: links.map(link => ({
+          platform: link.platform,
+          link: link.link,
+        })),
+      };
+
       console.log('Sending payload:', payload);  // Log the payload
       const response = await fetch('/api/profile/savelinks', {
         method: 'POST',
@@ -27,13 +35,23 @@ export default function LinksStart({
       if (!response.ok) {
         throw new Error('Failed to save links');
       }
-  
+
       // Handle success
+      const savedLinks = await response.json();
+      console.log('Saved links:', savedLinks);
+
+      // Update localStorage with the new links
+      const updatedProfileData = {
+        ...profileData,
+        links: savedLinks.userProfile.link, // Assuming the response contains the updated links
+      };
+      localStorage.setItem('profileData', JSON.stringify(updatedProfileData));
+
+      alert("Links saved successfully!");
     } catch (error) {
       console.error('Error saving links:', error);
     }
   };
-  
 
   // console.log(`here is LinksStart component : ${links} : length is : ${links.length}`);
 
@@ -59,7 +77,7 @@ export default function LinksStart({
             onClick={addNewLink} // Add onClick event to call the addNewLink function
             className="w-full text-center border border-[#633cff] py-3 rounded-lg text-[#633cff] font-medium transition-all hover:bg-[#633cff] hover:text-white"
           >
-            + Add new linkå
+            + Add new link
           </button>
         )}
         {/* Optionally display a message when the max limit is reached */}

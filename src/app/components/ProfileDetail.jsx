@@ -61,13 +61,30 @@ export default function ProfileDetail() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userProfile),
+        body: JSON.stringify(userProfile), 
       });
   
       if (res.ok) {
         const savedProfile = await res.json();
         localStorage.setItem('profileData', JSON.stringify(savedProfile));
-        
+
+        // Fetch the full profile with links from the profile endpoint
+        const profileRes = await fetch(`/api/profile`);
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          // Find the saved profile in the response
+          const updatedProfile = profileData.data.find(profile => profile.id === savedProfile.data.id);
+          
+          // Create a combined object with profile and links
+          const combinedProfileData = {
+            ...savedProfile.data,
+            links: updatedProfile.link // Include the links in the combined object
+          };
+
+          // Save the combined profile data in localStorage
+          localStorage.setItem('profileData', JSON.stringify(combinedProfileData));
+        }
+
         // Dispatch a custom event to notify other components
         window.dispatchEvent(new Event('profileUpdated'));
         
@@ -80,7 +97,7 @@ export default function ProfileDetail() {
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("An error occurred. Please try again.");
-    }
+    } 
   };
   
   return (

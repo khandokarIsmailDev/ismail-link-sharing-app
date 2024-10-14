@@ -8,6 +8,7 @@ export default function Hero({ ProfileDetail, LinksStart }) {
   // Initialize state to manage the links, now including 'icon' for each link
   const [links, setLinks] = useState([]); // Add platform,link & icon add here
   const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
+  const [profileData, setProfileData] = useState(JSON.parse(localStorage.getItem('profileData')) || {});
 
   // Add a new link when "Add new link" button is clicked
   const addNewLink = () => {
@@ -31,13 +32,13 @@ export default function Hero({ ProfileDetail, LinksStart }) {
     if (platform === "GitHub") {
       updatedLinks[index].icon = "/images/icon-github.svg";
     } else if (platform === "Twitter") {
-      updatedLinks[index].icon = "/images/twiiter-white.svg";
+      updatedLinks[index].icon = "/images/icon-twitter.svg";
     } else if (platform === "Twitch") {
-      updatedLinks[index].icon = "/images/twitch-white.svg";
+      updatedLinks[index].icon = "/images/icon-twitch.svg";
     } else if (platform === "Facebook") {
-      updatedLinks[index].icon = "/images/facebook-white.svg";
+      updatedLinks[index].icon = "/images/icon-facebook.svg";
     } else if (platform === "Gitlab") {
-      updatedLinks[index].icon = "/images/gitlab-white.svg";
+      updatedLinks[index].icon = "/images/icon-gitlab.svg";
     }
 
     setLinks(updatedLinks); // Update the state
@@ -68,6 +69,7 @@ export default function Hero({ ProfileDetail, LinksStart }) {
             {/* Links start */}
             {LinksStart && (
               <LinksStart
+                profileData={profileData} // Pass profileData to LinksStart
                 newLink={newLink}
                 onPlatformSelect={handlePlatformSelect}
                 newHandlChange={handleInputChange}
