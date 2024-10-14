@@ -1,6 +1,6 @@
 # How to Run This Project
 
-![Structure](./structure.png)
+![Structure](./newStructure.png)
 
 1. Clone the Repository: First, clone the repository to your local machine. Open your terminal and run:
 ```js
