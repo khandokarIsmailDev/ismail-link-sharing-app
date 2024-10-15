@@ -1,8 +1,8 @@
 'use client'
 import { useState, useRef, useEffect } from "react";
 
-export default function DropdownItem({ onPlatformSelect }) {
-  const [selectedText, setSelectedText] = useState("Select a platform");
+export default function DropdownItem({ onPlatformSelect, selectedPlatform }) {
+  const [selectedText, setSelectedText] = useState(selectedPlatform || "Select a platform");
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
@@ -15,7 +15,7 @@ export default function DropdownItem({ onPlatformSelect }) {
 
   const handleSelect = (platform, logoSrc) => {
     setSelectedText(platform);
-    setSelectedLogo(logoSrc);
+    setSelectedLogo(logoSrc); // Set the selected logo here
     setIsMenuVisible(false);
     onPlatformSelect(platform);  // Pass selected platform back to parent
   };
@@ -37,6 +37,24 @@ export default function DropdownItem({ onPlatformSelect }) {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setSelectedText(selectedPlatform); // Update selectedText when selectedPlatform changes
+    // Set the logo based on the selected platform
+    if (selectedPlatform === "GitHub") {
+      setSelectedLogo("/images/github-gray.svg");
+    } else if (selectedPlatform === "Twitter") {
+      setSelectedLogo("/images/icon-twitter.svg");
+    } else if (selectedPlatform === "Twitch") {
+      setSelectedLogo("/images/icon-twitch.svg");
+    } else if (selectedPlatform === "Gitlab") {
+      setSelectedLogo("/images/icon-gitlab.svg");
+    } else if (selectedPlatform === "Facebook") {
+      setSelectedLogo("/images/icon-facebook.svg");
+    } else {
+      setSelectedLogo(null); // Reset if no valid platform
+    }
+  }, [selectedPlatform]);
 
   return (
     <div className="mt-3">

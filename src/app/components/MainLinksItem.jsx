@@ -17,6 +17,7 @@ export default function MainLinksItem({ newLink, onPlatformSelect, newHandlChang
         </div>
         {/* dropdown start */}
         <DropdownItem 
+          selectedPlatform={newLink.platform} // Pass the current platform
           onPlatformSelect={(platform) => {
             newLink.platform = platform; // Store selected platform in newLink
             onPlatformSelect(platform);  // Call the parent function

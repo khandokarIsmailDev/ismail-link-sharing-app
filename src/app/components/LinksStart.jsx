@@ -136,11 +136,9 @@ export default function LinksStart({
           <div className="max-h-96 md:h-[30rem] overflow-auto">
             {links.map((link, index) => (
               <MainLinksItem
-                key={index} // Use index as key
-                newLink={link} // Pass the current link object
-                onPlatformSelect={(platform) =>
-                  onPlatformSelect(index, platform)
-                }
+                key={index}
+                newLink={link}
+                onPlatformSelect={(platform) => onPlatformSelect(index, platform)}
                 newHandlChange={(e) => newHandlChange(index, e)}
                 index={index}
                 onRemove={removeLink}

@@ -1,14 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MobileMoc from "./MobileMoc";
 import DropdownItem from "./DropdownItem";
 
 export default function Hero({ ProfileDetail, LinksStart }) {
-  // Initialize state to manage the links, now including 'icon' for each link
-  const [links, setLinks] = useState([]); // Add platform,link & icon add here
-  const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
+  // Initialize profileData first
   const [profileData, setProfileData] = useState(JSON.parse(localStorage.getItem('profileData')) || {});
+  
+  // Initialize links with existing links from profileData
+  const [links, setLinks] = useState(profileData.links || []); // Initialize with existing links
+  const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
+
+  // Effect to update links when profileData changes
+  useEffect(() => {
+    // Set icons based on platform when loading from local storage
+    const updatedLinks = profileData.links.map(link => {
+      if (link.platform === "GitHub") {
+        link.icon = "/images/icon-github.svg";
+      } else if (link.platform === "Twitter") {
+        link.icon = "/images/icon-twitter.svg";
+      } else if (link.platform === "Twitch") {
+        link.icon = "/images/icon-twitch.svg";
+      } else if (link.platform === "Facebook") {
+        link.icon = "/images/icon-facebook.svg";
+      } else if (link.platform === "Gitlab") {
+        link.icon = "/images/icon-gitlab.svg";
+      }
+      return link;
+    });
+    setLinks(updatedLinks);
+  }, [profileData]);
 
   // Add a new link when "Add new link" button is clicked
   const addNewLink = () => {
@@ -32,13 +54,13 @@ export default function Hero({ ProfileDetail, LinksStart }) {
     if (platform === "GitHub") {
       updatedLinks[index].icon = "/images/icon-github.svg";
     } else if (platform === "Twitter") {
-      updatedLinks[index].icon = "/images/twiiter-white.svg";
+      updatedLinks[index].icon = "/images/icon-twitter.svg";
     } else if (platform === "Twitch") {
-      updatedLinks[index].icon = "/images/twitch-white.svg";
+      updatedLinks[index].icon = "/images/icon-twitch.svg";
     } else if (platform === "Facebook") {
-      updatedLinks[index].icon = "/images/facebook-white.svg";
+      updatedLinks[index].icon = "/images/icon-facebook.svg";
     } else if (platform === "Gitlab") {
-      updatedLinks[index].icon = "/images/gitlab-white.svg";
+      updatedLinks[index].icon = "/images/icon-gitlab.svg";
     }
 
     setLinks(updatedLinks); // Update the state
