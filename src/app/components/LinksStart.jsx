@@ -79,8 +79,9 @@ export default function LinksStart({
         imageProfile: profileData.imageProfile || '/images/man.png', // Ensure imageProfile is included
         links: savedLinks.userProfile.link, // Assuming the response contains the updated links
       };
-      localStorage.setItem('profileData', JSON.stringify(updatedProfileData));
-
+      if (typeof window !== 'undefined') { // Check if running in the browser
+        localStorage.setItem('profileData', JSON.stringify(updatedProfileData));
+      }
       alert("Links saved successfully!");
     } catch (error) {
       console.error('Error saving links:', error);

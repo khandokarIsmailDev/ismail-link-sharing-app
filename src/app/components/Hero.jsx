@@ -6,31 +6,20 @@ import DropdownItem from "./DropdownItem";
 
 export default function Hero({ ProfileDetail, LinksStart }) {
   // Initialize profileData first
-  const [profileData, setProfileData] = useState(JSON.parse(localStorage.getItem('profileData')) || {});
+  const [profileData, setProfileData] = useState({});
   
   // Initialize links with existing links from profileData, ensuring it's always an array
-  const [links, setLinks] = useState(Array.isArray(profileData.links) ? profileData.links : []); // Ensure links is an array
+  const [links, setLinks] = useState([]);
   const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
 
   // Effect to update links when profileData changes
   useEffect(() => {
-    // Set icons based on platform when loading from local storage
-    const updatedLinks = profileData.links?.map(link => {
-      if (link.platform === "GitHub") {
-        link.icon = "/images/icon-github.svg";
-      } else if (link.platform === "Twitter") {
-        link.icon = "/images/twiiter-white.svg";
-      } else if (link.platform === "Twitch") {
-        link.icon = "/images/twitch-white.svg";
-      } else if (link.platform === "Facebook") {
-        link.icon = "/images/facebook-white.svg";
-      } else if (link.platform === "Gitlab") {
-        link.icon = "/images/gitlab-white.svg";
-      }
-      return link;
-    });
-    setLinks(updatedLinks);
-  }, [profileData]);
+    if (typeof window !== 'undefined') { // Check if running in the browser
+      const storedProfileData = JSON.parse(localStorage.getItem('profileData')) || {};
+      setProfileData(storedProfileData);
+      setLinks(Array.isArray(storedProfileData.links) ? storedProfileData.links : []);
+    }
+  }, []);
 
   // Add a new link when "Add new link" button is clicked
   const addNewLink = () => {
@@ -61,6 +50,8 @@ export default function Hero({ ProfileDetail, LinksStart }) {
       updatedLinks[index].icon = "/images/icon-facebook.svg";
     } else if (platform === "Gitlab") {
       updatedLinks[index].icon = "/images/icon-gitlab.svg";
+    } else {
+      updatedLinks[index].icon = ""; // Reset if no valid platform
     }
 
     setLinks(updatedLinks); // Update the state
@@ -71,8 +62,6 @@ export default function Hero({ ProfileDetail, LinksStart }) {
       prevLinks.filter((_, index) => index !== indexToRemove)
     );
   };
-
-  console.log(links);
 
   return (
     <section>

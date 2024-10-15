@@ -8,25 +8,27 @@ export default function DragDrop({onImageChange, imageProfile}) {
 
   // Handle image drop
   const onDrop = useCallback(async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const formData = new FormData();
-    formData.append('file', file);
+    if (typeof window !== 'undefined') { // Check if running in the browser
+      const file = acceptedFiles[0];
+      const formData = new FormData();
+      formData.append('file', file);
 
-    try {
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setSelectedImage(data.fileUrl); // Use fileUrl from Cloudinary response
-        onImageChange(data.fileUrl);
-      } else {
-        console.error('Upload failed');
+        if (response.ok) {
+          const data = await response.json();
+          setSelectedImage(data.fileUrl); // Use fileUrl from Cloudinary response
+          onImageChange(data.fileUrl);
+        } else {
+          console.error('Upload failed');
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
       }
-    } catch (error) {
-      console.error('Error uploading file:', error);
     }
   }, [onImageChange]);
 

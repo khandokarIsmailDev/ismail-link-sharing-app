@@ -10,29 +10,31 @@ export default function MobileMoc({ links }) {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const loadUserData = () => {
-      try {
-        const profileData = JSON.parse(localStorage.getItem("profileData"));
-        if (profileData) {
-          setUserData(profileData); // Directly set profileData instead of profileData.data
+    if (typeof window !== 'undefined') { // Check if running in the browser
+      const loadUserData = () => {
+        try {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            setUserData(profileData);
+          }
+        } catch (error) {
+          console.error("Error loading user data:", error);
         }
-      } catch (error) {
-        console.error("Error loading user data:", error);
-      }
-    };
+      };
 
-    loadUserData();
+      loadUserData();
 
-    // Listen for changes to localStorage
-    window.addEventListener("storage", loadUserData);
+      // Listen for changes to localStorage
+      window.addEventListener("storage", loadUserData);
 
-    // Custom event listener for immediate updates
-    window.addEventListener("profileUpdated", loadUserData);
+      // Custom event listener for immediate updates
+      window.addEventListener("profileUpdated", loadUserData);
 
-    return () => {
-      window.removeEventListener("storage", loadUserData);
-      window.removeEventListener("profileUpdated", loadUserData);
-    };
+      return () => {
+        window.removeEventListener("storage", loadUserData);
+        window.removeEventListener("profileUpdated", loadUserData);
+      };
+    }
   }, []);
 
   console.log("here is userData from MobileMoc: ", userData);

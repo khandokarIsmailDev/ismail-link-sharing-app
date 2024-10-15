@@ -11,32 +11,34 @@ export default function Nav() {
 
   // Function to fetch user ID from localStorage
   const fetchUserId = () => {
-    const userData = localStorage.getItem('profileData'); // Updated key
-    console.log("User data from local storage:", userData); // Log raw user data
+    if (typeof window !== 'undefined') { // Check if running in the browser
+      const userData = localStorage.getItem('profileData');
+      console.log("User data from local storage:", userData); // Log raw user data
 
-    if (userData) {
-      try {
-        const parsedResponse = JSON.parse(userData);
-        console.log("Parsed response:", parsedResponse); // Log parsed response
+      if (userData) {
+        try {
+          const parsedResponse = JSON.parse(userData);
+          console.log("Parsed response:", parsedResponse); // Log parsed response
 
-        // Check if the expected structure is present
-        if (parsedResponse) {
-          const id = parsedResponse.id; // Access user ID directly
-          console.log("User ID found:", id); // Log user ID
+          // Check if the expected structure is present
+          if (parsedResponse) {
+            const id = parsedResponse.id; // Access user ID directly
+            console.log("User ID found:", id); // Log user ID
 
-          if (id) {
-            setUserId(id);
+            if (id) {
+              setUserId(id);
+            } else {
+              console.error("User ID is undefined or null!");
+            }
           } else {
-            console.error("User ID is undefined or null!");
+            console.error("Parsed response is null or undefined!");
           }
-        } else {
-          console.error("Parsed response is null or undefined!");
+        } catch (error) {
+          console.error("Error parsing user data:", error); // Log any parsing errors
         }
-      } catch (error) {
-        console.error("Error parsing user data:", error); // Log any parsing errors
+      } else {
+        console.error("No user data found in local storage!"); // Log if no data found
       }
-    } else {
-      console.error("No user data found in local storage!"); // Log if no data found
     }
   };
 
