@@ -4,16 +4,25 @@ import React from "react";
 export default function LinkCard({link}) {
 
   let bgColor;
+  let icon = "";
+
   if(link?.platform === "GitHub"){
     bgColor = 'bg-black';
+    icon = "/images/icon-github.svg"; // Set icon for GitHub
   }else if(link?.platform === 'Twitter'){
     bgColor = 'bg-red-500';
+    icon = "/images/icon-twitter.svg"; // Set icon for Twitter
   }else if(link?.platform === 'Twitch'){
-    bgColor = 'bg-[#8b44f7]'
+    bgColor = 'bg-[#8b44f7]';
+    icon = "/images/icon-twitch.svg"; // Set icon for Twitch
   }else if(link?.platform === 'Gitlab'){
-    bgColor = 'bg-[#F46B25]'
+    bgColor = 'bg-[#F46B25]';
+    icon = "/images/icon-gitlab.svg"; // Set icon for Gitlab
   }else if(link?.platform === 'Facebook'){
-    bgColor = 'bg-[#149FF4]'
+    bgColor = 'bg-[#149FF4]';
+    icon = "/images/icon-facebook.svg"; // Set icon for Facebook
+  }else{
+    icon = ""; // Reset if no valid platform
   }
 
   // Ensure the link starts with 'http://' or 'https://'
@@ -25,7 +34,7 @@ export default function LinkCard({link}) {
       <a href={validLink} target="blank">
         <div className={`px-3 w-full ${bgColor} h-full rounded-lg flex items-center justify-between text-white`}>
           <div className="flex items-center gap-1 text-white text-sm">
-            <img src={link.icon} alt="" /> {/* Ensure this is rendering the icon */}
+            <img src={icon} alt="" /> {/* Ensure this is rendering the icon */}
             <h1 className="">{link?.platform}</h1>
           </div>
           <svg
