@@ -10,7 +10,8 @@ export async function GET(req, { params }) {
     const userId = parseInt(id, 10); // Base 10 to ensure correct parsing
 
     const result = await prisma.userProfile.findUnique({
-      where: { id: userId }, // Use the integer id in the query
+      where: { id: userId },
+      include:{link:true} // Use the integer id in the query
     });
 
     if (!result) {
