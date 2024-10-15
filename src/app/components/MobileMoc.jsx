@@ -37,8 +37,6 @@ export default function MobileMoc({ links }) {
     }
   }, []);
 
-  console.log("here is userData from MobileMoc: ", userData);
-
   return (
     <div className="hero-custom lg:bg-[6rem] md:bg-[2rem] relative">
       <div className="flex absolute lg:left-[8.7rem] md:left-[4.5rem] top-40">

@@ -1,11 +1,31 @@
 'use client'
-import { getPlatformBgColor, getPlatformIcon } from "@/iconsUtils";
 import React from "react";
 
 export default function LinkCard({link}) {
 
- 
+  let bgColor;
+  let icon = "";
 
+  if(link?.platform === "GitHub"){
+    bgColor = 'bg-black';
+    icon = "/images/icon-github.svg"; // Set icon for GitHub
+  }else if(link?.platform === 'Twitter'){
+    bgColor = 'bg-red-500';
+    icon = "/images/twiiter-white.svg"; // Set icon for Twitter
+  }else if(link?.platform === 'Twitch'){
+    bgColor = 'bg-[#8b44f7]';
+    icon = "/images/twitch-white.svg"; // Set icon for Twitch
+  }else if(link?.platform === 'Gitlab'){
+    bgColor = 'bg-[#F46B25]';
+    icon = "/images/gitlab-white.svg"; // Set icon for Gitlab
+  }else if(link?.platform === 'Facebook'){
+    bgColor = 'bg-[#149FF4]';
+    icon = "/images/facebook-white.svg"; // Set icon for Facebook
+  }else{
+    icon = ""; // Reset if no valid platform
+  }
+
+  console.log(`LInkCard : ${link?.platform} and icon : ${icon} are geted`)
 
   // Ensure the link starts with 'http://' or 'https://'
   const validLink = link.link.startsWith('http://') || link.link.startsWith('https://') 
@@ -14,9 +34,9 @@ export default function LinkCard({link}) {
   return (
     <div className="bg-gray-100 w-56 h-10 rounded-lg mb-5 cursor-pointer">
       <a href={validLink} target="blank">
-        <div className={`px-3 w-full ${getPlatformBgColor(link?.platform)} h-full rounded-lg flex items-center justify-between text-white`}>
+        <div className={`px-3 w-full ${bgColor} h-full rounded-lg flex items-center justify-between text-white`}>
           <div className="flex items-center gap-1 text-white text-sm">
-            <img src={getPlatformIcon(link?.platform)} alt="" /> {/* Ensure this is rendering the icon */}
+            <img src={icon} alt="" /> {/* Ensure this is rendering the icon */}
             <h1 className="">{link?.platform}</h1>
           </div>
           <svg

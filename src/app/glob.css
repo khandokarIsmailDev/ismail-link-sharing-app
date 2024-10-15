@@ -9,3 +9,24 @@
   height: 50rem;
   background-repeat: no-repeat;
 }
+
+
+.bg-black {
+  /* No need to redefine, just use bg-black directly in your components */
+}
+
+.bg-red-500 {
+  /* No need to redefine, just use bg-red-500 directly in your components */
+}
+
+.bg-[#8b44f7] {
+  /* No need to redefine, just use bg-[#8b44f7] directly in your components */
+}
+
+.bg-[#F46B25] {
+  /* No need to redefine, just use bg-[#F46B25] directly in your components */
+}
+
+.bg-[#149FF4] {
+  /* No need to redefine, just use bg-[#149FF4] directly in your components */
+}
