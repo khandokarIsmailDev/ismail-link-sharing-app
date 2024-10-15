@@ -4,7 +4,8 @@ import LinkCard from "./LinkCard";
 
 export default function MobileMoc({ links }) {
   const totalBoxes = 5;
-  const emptyBoxes = totalBoxes - links.length;
+  const safeLinks = Array.isArray(links) ? links : []; // Ensure links is an array
+  const emptyBoxes = totalBoxes - safeLinks.length; // Calculate empty boxes based on safeLinks
 
   const [userData, setUserData] = useState(null);
 
@@ -63,14 +64,14 @@ export default function MobileMoc({ links }) {
           )}
 
           {/* Display links */}
-          {links.map((link, index) => (
+          {safeLinks.map((link, index) => (
             <LinkCard key={index} link={link} />
           ))}
 
           {/* Render empty boxes if links are less than 5 */}
           {Array.from({ length: emptyBoxes }).map((_, index) => (
             <div
-              key={index + links.length}
+              key={index + safeLinks.length}
               className="bg-gray-100 w-56 h-10 rounded-lg mb-5 cursor-pointer"
             />
           ))}

@@ -8,14 +8,14 @@ export default function Hero({ ProfileDetail, LinksStart }) {
   // Initialize profileData first
   const [profileData, setProfileData] = useState(JSON.parse(localStorage.getItem('profileData')) || {});
   
-  // Initialize links with existing links from profileData
-  const [links, setLinks] = useState(profileData.links || []); // Initialize with existing links
+  // Initialize links with existing links from profileData, ensuring it's always an array
+  const [links, setLinks] = useState(Array.isArray(profileData.links) ? profileData.links : []); // Ensure links is an array
   const [newLink, setNewLink] = useState({ platform: "", link: "", icon: "" });
 
   // Effect to update links when profileData changes
   useEffect(() => {
     // Set icons based on platform when loading from local storage
-    const updatedLinks = profileData.links.map(link => {
+    const updatedLinks = profileData.links?.map(link => {
       if (link.platform === "GitHub") {
         link.icon = "/images/icon-github.svg";
       } else if (link.platform === "Twitter") {

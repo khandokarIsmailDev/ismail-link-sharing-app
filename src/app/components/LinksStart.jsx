@@ -3,12 +3,13 @@ import React from "react";
 import MainLinksItem from "./MainLinksItem";
 
 export default function LinksStart({
-  links,
+  profileData, // Pass profileData as a prop
+  newLink,
   onPlatformSelect,
   newHandlChange,
   addNewLink,
+  links = [],
   removeLink,
-  profileData, // Pass profileData as a prop
 }) {
   // Set the maximum number of links allowed
   const MAX_LINKS = 5;
