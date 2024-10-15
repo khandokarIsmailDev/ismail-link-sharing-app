@@ -11,24 +11,32 @@ export default function Nav() {
 
   // Function to fetch user ID from localStorage
   const fetchUserId = () => {
-    const storedResponse = localStorage.getItem("profileData");
-    console.log("Stored response:", storedResponse);
+    const userData = localStorage.getItem('profileData'); // Updated key
+    console.log("User data from local storage:", userData); // Log raw user data
 
-    if (storedResponse) {
+    if (userData) {
       try {
-        const parsedResponse = JSON.parse(storedResponse);
-        console.log("Parsed response:", parsedResponse); // Log the parsed response
+        const parsedResponse = JSON.parse(userData);
+        console.log("Parsed response:", parsedResponse); // Log parsed response
 
-        if (parsedResponse && parsedResponse.data) {
-          setUserId(parsedResponse.data.id); // Set user ID from the parsed data
+        // Check if the expected structure is present
+        if (parsedResponse) {
+          const id = parsedResponse.id; // Access user ID directly
+          console.log("User ID found:", id); // Log user ID
+
+          if (id) {
+            setUserId(id);
+          } else {
+            console.error("User ID is undefined or null!");
+          }
         } else {
-          console.error("Parsed response does not contain 'data'", parsedResponse);
+          console.error("Parsed response is null or undefined!");
         }
       } catch (error) {
-        console.error("Failed to parse profileData from localStorage", error);
+        console.error("Error parsing user data:", error); // Log any parsing errors
       }
     } else {
-      console.error("No data found in localStorage for profileData");
+      console.error("No user data found in local storage!"); // Log if no data found
     }
   };
 
@@ -149,7 +157,7 @@ export default function Nav() {
                 </Link>
                 <Link href="/" className="bg-[#EFEBFF] px-3 py-2 rounded-lg">
                   <svg
-                    xmlns="http://www.w3.org/www.svgs/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
                     width={21}
                     height={20}
                     fill="currentColor"
