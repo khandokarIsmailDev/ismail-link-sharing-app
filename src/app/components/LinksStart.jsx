@@ -150,7 +150,7 @@ export default function LinksStart({
         <div className="h-[1px] border mb-4 mt-6 sm:mt-20"></div>
         <div className="w-full text-end">
           <input
-            className="w-full sm:w-20 px-5 py-2 border rounded-lg bg-[#633CFF] text-white"
+            className="w-full sm:w-20 px-5 py-2 border rounded-lg bg-[#633CFF] text-white cursor-pointer"
             type="submit"
             defaultValue="Save"
             onClick={handleSave}
