@@ -19,13 +19,13 @@ export default function Hero({ ProfileDetail, LinksStart }) {
       if (link.platform === "GitHub") {
         link.icon = "/images/icon-github.svg";
       } else if (link.platform === "Twitter") {
-        link.icon = "/images/icon-twitter.svg";
+        link.icon = "/images/twiiter-white.svg";
       } else if (link.platform === "Twitch") {
-        link.icon = "/images/icon-twitch.svg";
+        link.icon = "/images/twitch-white.svg";
       } else if (link.platform === "Facebook") {
-        link.icon = "/images/icon-facebook.svg";
+        link.icon = "/images/facebook-white.svg";
       } else if (link.platform === "Gitlab") {
-        link.icon = "/images/icon-gitlab.svg";
+        link.icon = "/images/gitlab-white.svg";
       }
       return link;
     });
