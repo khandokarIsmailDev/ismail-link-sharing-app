@@ -25,6 +25,8 @@ export default function LinkCard({link}) {
     icon = ""; // Reset if no valid platform
   }
 
+  console.log(`LInkCard : ${link?.platform} and icon : ${icon} are geted`)
+
   // Ensure the link starts with 'http://' or 'https://'
   const validLink = link.link.startsWith('http://') || link.link.startsWith('https://') 
     ? link.link : `https://${link.link}`;
