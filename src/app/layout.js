@@ -15,7 +15,7 @@ export default function RootLayout({ children }) { // Accept previewImage as a p
     <html lang="en">
       <Head>
         
-        <meta property="og:image" content="/images/man.png" /> 
+        <meta property="og:image" content="https://res.cloudinary.com/dz209s6jk/image/upload/f_auto,q_auto,w_700/Challenges/thypgk1nmxm4modj1wdl.jpg" /> 
       </Head>
       <body className="bg-[#FAFAFA]">{children}</body>
     </html>
